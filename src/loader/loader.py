@@ -3,7 +3,9 @@
 from httpx import Client
 from letsbuilda.pypi import PyPIServices
 
-from loader.constants import Settings
+from loader.constants import GIT_SHA, Settings
+
+SKIP_AUTH = GIT_SHA in {"testing", "development"}
 
 
 def build_authorization_header(access_token: str) -> dict[str, str]:
@@ -47,7 +49,7 @@ def load_packages(packages: list[tuple[str, str]], *, http_client: Client, acces
 
 def main(*, http_client: Client, pypi_client: PyPIServices) -> None:
     """Run the loader."""
-    access_token = get_access_token(http_client=http_client)
+    access_token = "DEVELOPMENT" if SKIP_AUTH else get_access_token(http_client=http_client)
 
     packages = fetch_packages(pypi_client=pypi_client)
 
