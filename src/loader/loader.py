@@ -3,9 +3,7 @@
 from httpx import Client
 from letsbuilda.pypi import PyPIServices
 
-from loader.constants import GIT_SHA, Settings
-
-SKIP_AUTH = GIT_SHA in {"testing", "development"}
+from loader.constants import SKIP_AUTH, Settings
 
 
 def build_authorization_header(access_token: str) -> dict[str, str]:
