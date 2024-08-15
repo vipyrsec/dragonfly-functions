@@ -110,12 +110,9 @@ def test_main(monkeypatch: pytest.MonkeyPatch) -> None:
 
     fetch_packages_mock = Mock(return_value=mock_packages)
     load_packages_mock = Mock()
-    get_access_token_mock = Mock(return_value="test-access-token")
     monkeypatch.setattr("loader.loader.fetch_packages", fetch_packages_mock)
     monkeypatch.setattr("loader.loader.load_packages", load_packages_mock)
-    monkeypatch.setattr("loader.loader.get_access_token", get_access_token_mock)
 
     loader.main(http_client=mock_http_client, pypi_client=mock_pypi_client)
-    get_access_token_mock.assert_any_call(http_client=mock_http_client)
     fetch_packages_mock.assert_any_call(pypi_client=mock_pypi_client)
-    load_packages_mock.assert_any_call(mock_packages, http_client=mock_http_client, access_token="test-access-token")
+    load_packages_mock.assert_any_call(mock_packages, http_client=mock_http_client, access_token="DEVELOPMENT")
