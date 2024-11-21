@@ -1,6 +1,11 @@
 """Loader settings."""
 
+from os import getenv
+
 from pydantic_settings import BaseSettings
+
+GIT_SHA = getenv("GIT_SHA", "development")
+SKIP_AUTH = GIT_SHA in {"testing", "development"}
 
 
 class _Settings(BaseSettings):
